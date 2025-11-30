@@ -321,3 +321,7 @@ select.addEventListener("change", function () {
   });
 });
 
+
+card.setAttribute("data-aos", "fade-up");
+
+
