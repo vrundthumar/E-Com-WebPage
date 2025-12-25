@@ -378,9 +378,29 @@ function addToCart(index) {
   updateCartBadge();
 }
 
-function buyNow(index) {
-  addToCart(index);            // ✅ add first
-  window.location.href = "checkout.html"; // ✅ then redirect
+function buyNow(index){
+  if(!isLoggedIn()){
+    pendingBuyIndex = index;
+    showLogin();
+    return;
+  }
+
+  completeBuyNow(index);
+}
+
+function completeBuyNow(index){
+  const product = products[index];
+
+  const item = [{
+    id: index,
+    title: product.title,
+    price: product.price,
+    image: product.Image,
+    qty: 1
+  }];
+
+  localStorage.setItem("cart", JSON.stringify(item));
+  window.location.href = "/";
 }
 
 
@@ -432,3 +452,194 @@ function updateCartBadge() {
 function goToCart() {
   window.location.href = "checkout.html";
 }
+
+
+// function goBack(){
+//   if (history.length > 1) {
+//     history.back();
+//   } else {
+//     window.location.href = "index.html";
+//   }
+// }
+
+// function goHome(){
+//   window.location.href = "index.html";
+// }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const backBtn = document.getElementById("backHomeBtn");
+
+  if (backBtn) {
+    backBtn.addEventListener("click", () => {
+      window.location.href = "index.html";
+    });
+  }
+});
+
+
+/* ===============================
+   LOGIN FORM LOGIC
+=============================== */
+
+let pendingBuyIndex = null;
+
+function isLoggedIn(){
+  return localStorage.getItem("loggedIn") === "true";
+}
+
+function showLogin(){
+  document.getElementById("loginModal").classList.add("show");
+}
+
+function hideLogin(){
+  document.getElementById("loginModal").classList.remove("show");
+}
+
+/* Close modal */
+document.getElementById("closeLogin").onclick = hideLogin;
+
+/* Handle login */
+document.getElementById("loginForm").onsubmit = (e) => {
+  e.preventDefault();
+
+  const email = e.target.querySelector('input[type="email"]').value;
+
+  loginUser(email);   // ✅ save login state
+  hideLogin();
+
+  if(window.pendingBuyIndex !== undefined){
+    completeBuyNow(pendingBuyIndex);
+    pendingBuyIndex = undefined;
+  }
+};
+
+  // Fake login success
+  localStorage.setItem("loggedIn", "true");
+  hideLogin();
+
+  // Continue Buy Now after login
+  if(pendingBuyIndex !== null){
+    completeBuyNow(pendingBuyIndex);
+    pendingBuyIndex = null;
+  }
+;
+
+
+function isLoggedIn(){
+  return localStorage.getItem("auth_user") !== null;
+}
+
+function loginUser(email){
+  localStorage.setItem("auth_user", JSON.stringify({
+    email,
+    loginTime: Date.now()
+  }));
+}
+
+function logoutUser(){
+  localStorage.removeItem("auth_user");
+}
+
+
+function updateLoginUI(){
+  const logged = isLoggedIn();
+  const user = JSON.parse(localStorage.getItem("auth_user"));
+
+  const loginIndicator = document.getElementById("loginStatus");
+  if(!loginIndicator) return;
+
+  loginIndicator.textContent = logged
+    ? `Hi, ${user.email.split("@")[0]}`
+    : "Guest";
+}
+
+updateLoginUI();
+
+
+const userBtn = document.getElementById("userBtn");
+const userMenu = document.querySelector(".user-menu");
+const logoutBtn = document.getElementById("logoutBtn");
+
+if(userBtn){
+  userBtn.onclick = () => {
+    userMenu.classList.toggle("open");
+  };
+}
+
+if(logoutBtn){
+  logoutBtn.onclick = () => {
+    logoutUser();
+    userMenu.classList.remove("open");
+  };
+}
+
+function loginUser(email, name){
+  localStorage.setItem("auth_user", JSON.stringify({
+    email,
+    name,
+    loginTime: Date.now()
+  }));
+  updateAuthUI();
+}
+
+
+document.getElementById("loginForm").onsubmit = (e) => {
+  e.preventDefault();
+
+  const email = e.target.querySelector('input[type="email"]').value;
+
+  // fake name from email
+  const name = email.split("@")[0];
+
+  loginUser(email, name);
+  hideLogin();
+};
+
+function isLoggedIn(){
+  return !!localStorage.getItem("auth_user");
+}
+
+function logoutUser(){
+  localStorage.removeItem("auth_user");
+  updateAuthUI();
+}
+
+function updateAuthUI(){
+  const userMenu = document.getElementById("userMenu");
+  const userNameEl = document.getElementById("userName");
+
+  if(!userMenu || !userNameEl) return;
+
+  if(isLoggedIn()){
+    const user = JSON.parse(localStorage.getItem("auth_user"));
+    userMenu.style.display = "block";
+    userNameEl.textContent = user.name;   // 👈 NAME IN NAVBAR
+  } else {
+    userMenu.style.display = "none";
+    userNameEl.textContent = "";
+  }
+}
+
+function loginUser(email, name){
+  localStorage.setItem("auth_user", JSON.stringify({
+    email,
+    name,
+    loginTime: Date.now()
+  }));
+  updateAuthUI();
+}
+
+
+document.getElementById("loginForm").onsubmit = (e) => {
+  e.preventDefault();
+
+  const email = e.target.querySelector('input[type="email"]').value;
+  const name = email.split("@")[0]; // fake name
+
+  loginUser(email, name);
+  hideLogin();
+};
+
+
+
+

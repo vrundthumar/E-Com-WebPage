@@ -42,6 +42,18 @@
 
   <div class="nav-actions">
 
+    <div class="user-menu" id="userMenu">
+  <button class="user-btn" id="userBtn">
+    <span class="user-icon">👤</span>
+    <span class="user-name" id="userName"></span>
+  </button>
+
+  <div class="user-dropdown" id="userDropdown">
+    <button id="logoutBtn">Logout</button>
+  </div>
+</div>
+
+
   <div class="cart-wrapper" onclick="goToCart()">
   <span class="cart-icon">🛒</span>
   <span id="cartCount" class="cart-badge">0</span>
@@ -59,9 +71,10 @@
   <!-- SIDE DRAWER -->
   <aside class="drawer" id="drawer">
     <div class="drawer-header">
-      <h3>Filters</h3>
-      <button id="closeDrawer">✕</button>
-    </div>
+  <h3>Filters</h3>
+  <button class="drawer-close" id="closeDrawer">✕</button>
+</div>
+
 
     <div class="drawer-content">
       <button class="filter-item active">All</button>
@@ -125,11 +138,88 @@
 
 
 
+
+
+
+
   <!-- OVERLAY -->
   <div class="overlay" id="overlay"></div>
 
   <!-- PRODUCTS -->
   <main class="product-container" id="productContainer"></main>
+
+
+  <footer class="site-footer">
+
+  <div class="footer-top">
+
+    <!-- BRAND -->
+    <div class="footer-brand">
+      <img src="./assets/withoutbglogo.png" alt="Velin Logo">
+      <p>
+        Premium everyday wear designed with comfort,
+        quality and timeless style.
+      </p>
+    </div>
+
+    <!-- LINKS -->
+    <div class="footer-links">
+      <h4>Shop</h4>
+      <a href="#">New Arrivals</a>
+      <a href="#">Shirts</a>
+      <a href="#">T-Shirts</a>
+      <a href="#">Jeans</a>
+      <a href="#">Jackets</a>
+    </div>
+
+    <div class="footer-links">
+      <h4>Company</h4>
+      <a href="#">About Us</a>
+      <a href="#">Contact</a>
+      <a href="#">Careers</a>
+      <a href="#">Sustainability</a>
+    </div>
+
+    <div class="footer-links">
+      <h4>Support</h4>
+      <a href="#">FAQs</a>
+      <a href="#">Shipping & Returns</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms & Conditions</a>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 Velin. All rights reserved.</p>
+  </div>
+
+</footer>
+
+<!-- LOGIN MODAL -->
+<div class="login-modal" id="loginModal">
+  <div class="login-card">
+    <button class="login-close" id="closeLogin">✕</button>
+
+    <h3>Welcome Back</h3>
+    <p>Please login to continue</p>
+
+    <form id="loginForm">
+      <input type="email" placeholder="Email address" required />
+      <input type="password" placeholder="Password" required />
+
+      <button type="submit" class="login-submit">
+        Login & Continue
+      </button>
+    </form>
+
+    <span class="login-note">
+      Please login to buy the product.
+    </span>
+  </div>
+</div>
+
+
 
   <script src="script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
