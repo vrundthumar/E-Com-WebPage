@@ -1,5 +1,5 @@
 const products = [
-    {
+  {
     Image: "./assets/1.JPG",
     title: "Slim Cotton Stripes Light Blue Shirt",
     price: 1199,
@@ -238,90 +238,197 @@ const products = [
     gender: "male",
     Type: "Shorts",
   },
-
-
 ];
 
-let container = document.querySelector(".container");
-let imageId = 1
+// const products = [ /* YOUR FULL ARRAY (UNCHANGED) */ ];
 
-products.forEach((e) => {
-    let card = document.createElement("div");
-    card.setAttribute("class", "card");
-    console.log(card);
+const container = document.getElementById("productContainer");
+const drawer = document.getElementById("drawer");
+const overlay = document.getElementById("overlay");
+const menuBtn = document.getElementById("menuBtn");
+const closeDrawer = document.getElementById("closeDrawer");
+const filters = document.querySelectorAll(".filter-item");
+const themeToggle = document.getElementById("themeToggle");
 
-    let cardImg = document.createElement("img");
-    cardImg.setAttribute("src", e.Image);
-    cardImg.setAttribute("id",`imgID-${imageId}`)
-    imageId++
+/* RENDER */
+function renderProducts(list){
+  container.innerHTML="";
+  list.forEach((p,i)=>{
+    const card=document.createElement("div");
+    card.className="card";
+    card.setAttribute("data-aos","fade-up");
 
-    let cardTitle = document.createElement("h1");
-    cardTitle.innerText = e.title;
-
-    // let cardGender = document.createElement("h2");
-    // cardGender.innerText = pd.gender;
-
-    let cardType = document.createElement("h2");
-    cardType.innerText = e.Type;
-
-    let cardPrice = document.createElement("p");
-    cardPrice.innerText = '₹ '+ e.price.toLocaleString("en-IN");
-
-    card.appendChild(cardImg);
-    card.appendChild(cardTitle);
-    // card.appendChild(cardGender);
-    card.appendChild(cardType)
-    card.appendChild(cardPrice);
-
-    container.appendChild(card);
-});
-
-
-
-
-
-//  SELECT MENU
-// Select dropdown filter logic
-const select = document.getElementById("select");
-
-select.addEventListener("change", function () {
-  const selectedOption = select.options[select.selectedIndex].text;
-
-  container.innerHTML = ""; // Clear existing cards
-
-  const filteredProducts = selectedOption === "All"
-    ? products
-    : products.filter((item) => item.Type === selectedOption);
-
-  let imageId = 1;
-  filteredProducts.forEach((e) => {
-    let card = document.createElement("div");
-    card.setAttribute("class", "card");
-
-    let cardImg = document.createElement("img");
-    cardImg.setAttribute("src", e.Image);
-    cardImg.setAttribute("id", `imgID-${imageId}`);
-    imageId++;
-
-    let cardTitle = document.createElement("h1");
-    cardTitle.innerText = e.title;
-
-    let cardType = document.createElement("h2");
-    cardType.innerText = e.Type;
-
-    let cardPrice = document.createElement("p");
-    cardPrice.innerText = '₹ ' + e.price;
-
-    card.appendChild(cardImg);
-    card.appendChild(cardTitle);
-    card.appendChild(cardType);
-    card.appendChild(cardPrice);
-
+    card.innerHTML=`
+      <div style="position:relative">
+        <img src="${p.Image}">
+        <div class="card-actions">
+          <button class="action-btn cart" onclick="addToCart(${i})">Add to Cart</button>
+          <button class="action-btn buy" onclick="buyNow(${i})">Buy Now</button>
+        </div>
+      </div>
+      <div class="card-content">
+        <h1>${p.title}</h1>
+        <h2>${p.Type}</h2>
+        <p>₹ ${p.price.toLocaleString("en-IN")}</p>
+      </div>
+    `;
     container.appendChild(card);
   });
+}
+renderProducts(products);
+
+/* DRAWER */
+menuBtn.onclick=()=>{
+  drawer.classList.add("open");
+  overlay.classList.add("show");
+};
+closeDrawer.onclick=close;
+overlay.onclick=close;
+
+function close(){
+  drawer.classList.remove("open");
+  overlay.classList.remove("show");
+}
+
+/* FILTER */
+filters.forEach(btn=>{
+  btn.onclick=()=>{
+    filters.forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+
+    const type=btn.innerText;
+    type==="All"
+      ? renderProducts(products)
+      : renderProducts(products.filter(p=>p.Type===type));
+
+    close();
+  };
+});
+
+/* THEME */
+document.addEventListener("DOMContentLoaded", () => {
+
+  const themeToggle = document.getElementById("themeToggle");
+  const drawerThemeToggle = document.getElementById("drawerThemeToggle");
+
+  function applyTheme(isDark){
+    document.body.classList.toggle("dark", isDark);
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+
+    if(themeToggle){
+      themeToggle.textContent = isDark ? "☀️" : "🌙";
+    }
+
+    if(drawerThemeToggle){
+      drawerThemeToggle.textContent = isDark
+        ? "☀️ Light Mode"
+        : "🌙 Dark Mode";
+    }
+  }
+
+  // INIT
+  const savedTheme = localStorage.getItem("theme") === "dark";
+  applyTheme(savedTheme);
+
+  // DESKTOP TOGGLE
+  if(themeToggle){
+    themeToggle.addEventListener("click", () => {
+      applyTheme(!document.body.classList.contains("dark"));
+    });
+  }
+
+  // DRAWER TOGGLE (MOBILE)
+  if(drawerThemeToggle){
+    drawerThemeToggle.addEventListener("click", () => {
+      applyTheme(!document.body.classList.contains("dark"));
+
+      // close drawer after toggle (UX polish)
+      const drawer = document.getElementById("drawer");
+      const overlay = document.getElementById("overlay");
+      if(drawer) drawer.classList.remove("open");
+      if(overlay) overlay.classList.remove("show");
+    });
+  }
+
 });
 
 
-card.setAttribute("data-aos", "fade-up");
+/* ======================
+   ADD TO CART (AMAZON)
+====================== */
+function addToCart(index) {
+  const product = products[index];
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const existing = cart.find(item => item.id === index);
+
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({
+      id: index,
+      title: product.title,
+      price: product.price,
+      image: product.Image,
+      qty: 1
+    });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartBadge();
+}
+
+function buyNow(index) {
+  addToCart(index);            // ✅ add first
+  window.location.href = "checkout.html"; // ✅ then redirect
+}
 
 
+function changeQty(i, delta){
+  cart[i].qty += delta;
+
+  if(cart[i].qty <= 0){
+    cart.splice(i, 1);
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCheckout();
+  updateCartBadge(); // sync badge
+}
+
+/* ======================
+   CART BADGE (FIXED)
+====================== */
+// function updateCartBadge() {
+//   const badge = document.getElementById("cartCount");
+//   if (!badge) return; // safe for other pages
+
+//   const cart = JSON.parse(localStorage.getItem("cart")) || [];
+//   const count = cart.reduce((sum, item) => sum + item.qty, 0);
+
+//   badge.textContent = count;
+
+//   if (count > 0) {
+//     badge.classList.add("show");
+//   } else {
+//     badge.classList.remove("show");
+//   }
+// }
+
+// 🔥 RUN ON PAGE LOAD
+updateCartBadge();
+
+function updateCartBadge() {
+  const badge = document.getElementById("cartCount");
+  if (!badge) return;
+
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const count = cart.reduce((sum, item) => sum + item.qty, 0);
+
+  badge.textContent = count;
+  badge.classList.toggle("show", count > 0);
+}
+
+function goToCart() {
+  window.location.href = "checkout.html";
+}

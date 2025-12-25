@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout</title>
+  <link rel="stylesheet" href="style.css">
+
+
+</head>
+
+<body class="checkout-page">
+
+<!-- ✅ SAME NAVBAR AS HOME -->
+<header class="navbar">
+  <img id="logo" src="./assets/withoutbglogo.png" alt="logo">
+
+  <div class="nav-actions">
+    <div class="cart-wrapper">
+      <span class="cart-icon">🛒</span>
+      <span id="cartCount" class="cart-badge">0</span>
+    </div>
+
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+  </div>
+</header>
+
+
+<!-- CHECKOUT HEADER -->
+<header class="checkout-header">
+  <h2>Your Cart 🛒</h2>
+</header>
+
+<main class="checkout-layout">
+
+  <!-- LEFT: ITEMS -->
+  <section class="checkout-items" id="checkoutItems"></section>
+
+  <!-- RIGHT: SUMMARY -->
+  <aside class="checkout-summary">
+    <h3>Order Summary</h3>
+
+    <div class="summary-row">
+      <span>Subtotal</span>
+      <span id="subtotal">₹0</span>
+    </div>
+
+    <div class="summary-row">
+      <span>Shipping</span>
+      <span>Free</span>
+    </div>
+
+    <div class="summary-total">
+      <span>Total</span>
+      <span id="total">₹0</span>
+    </div>
+
+    <button class="place-order">Place Order</button>
+  </aside>
+
+</main>
+
+<script src="checkout.js"></script>
+<script>
+  // Sync theme on checkout page
+  const theme = localStorage.getItem("theme");
+  if(theme === "dark"){
+    document.body.classList.add("dark");
+    document.getElementById("themeToggle").textContent = "☀️";
+  }
+
+  document.getElementById("themeToggle").onclick = () => {
+    document.body.classList.toggle("dark");
+    const isDark = document.body.classList.contains("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+    document.getElementById("themeToggle").textContent = isDark ? "☀️" : "🌙";
+  };
+</script>
+
+</body>
+</html>
