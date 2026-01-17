@@ -1,229 +1,26 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#E7E1D8" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#E7E1D8" media="(prefers-color-scheme: dark)">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- TODO: Set the document title to the name of your application -->
+    <title>Lovable App</title>
+    <meta name="description" content="Lovable Generated Project" />
+    <meta name="author" content="Lovable" />
 
-  <title>Store</title>
+    <!-- TODO: Update og:title to match your application name -->
+    <meta property="og:title" content="Lovable App" />
+    <meta property="og:description" content="Lovable Generated Project" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
 
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Lovable" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+  </head>
 
-  <style>
-    .theme-toggle{
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-
-  display: grid;          /* BEST for perfect centering */
-  place-items: center;   /* exact center both axes */
-
-  font-size: 18px;
-  line-height: 1;        /* kill emoji baseline offset */
-
-  background: var(--card);
-  color: var(--text);
-  border: 1px solid var(--border);
-  cursor: pointer;
-
-  padding: 0;            /* important */
-}
-
-  </style>
-</head>
-
-<body>
-
-  <!-- NAVBAR -->
-  <header class="navbar">
-  <img id="logo" src="./assets/withoutbglogo.png" alt="logo">
-
-  <div class="nav-actions">
-
-    <div class="user-menu" id="userMenu">
-  <button class="user-btn" id="userBtn">
-    <span class="user-icon">👤</span>
-    <span class="user-name" id="userName"></span>
-  </button>
-
-  <div class="user-dropdown" id="userDropdown">
-    <button id="logoutBtn">Logout</button>
-  </div>
-</div>
-
-
-  <div class="cart-wrapper" onclick="goToCart()">
-  <span class="cart-icon">🛒</span>
-  <span id="cartCount" class="cart-badge">0</span>
-</div>
-
-
-  <button class="theme-toggle desktop-toggle" id="themeToggle">🌙</button>
-  <button class="menu-btn" id="menuBtn">☰</button>
-
-</div>
-
-</header>
-
-
-  <!-- SIDE DRAWER -->
-  <aside class="drawer" id="drawer">
-    <div class="drawer-header">
-  <h3>Filters</h3>
-  <button class="drawer-close" id="closeDrawer">✕</button>
-</div>
-
-
-    <div class="drawer-content">
-      <button class="filter-item active">All</button>
-      <button class="filter-item">Shirt</button>
-      <button class="filter-item">T-Shirt</button>
-      <button class="filter-item">Jeans</button>
-      <button class="filter-item">Trousers</button>
-      <button class="filter-item">Jacket</button>
-      <button class="filter-item">Shorts</button>
-
-      <hr style="margin:20px 0">
-
-<button class="theme-toggle drawer-toggle" id="drawerThemeToggle">
-  🌙 Toggle Theme
-</button>
-
-    </div>
-  </aside>
-
-  <section class="hero-wrapper">
-
-  <!-- MAIN HERO -->
-  <div class="hero-main">
-    <img src="./assets/h2.jpg" alt="Summer Collection">
-
-    <div class="hero-main-content">
-      <h1>Summer Arrival of Outfit</h1>
-      <p>
-        Discover quality fashion that reflects your style and makes
-        everyday enjoyable.
-      </p>
-
-      <button class="hero-cta">
-        Explore Product
-        <span>→</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- SUB HERO CARDS -->
-  <div class="hero-sub-grid">
-
-  <div class="hero-sub bg-1">
-    <div class="hero-sub-content">
-      <h3>Where dreams meet couture</h3>
-      <button class="sub-btn">Shop Now</button>
-    </div>
-  </div>
-
-  <div class="hero-sub bg-2">
-    <div class="hero-sub-content">
-      <h3>Enchanting styles<br>for every women</h3>
-      <button class="sub-btn">Shop Now</button>
-    </div>
-  </div>
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-  <!-- OVERLAY -->
-  <div class="overlay" id="overlay"></div>
-
-  <!-- PRODUCTS -->
-  <main class="product-container" id="productContainer"></main>
-
-
-  <footer class="site-footer">
-
-  <div class="footer-top">
-
-    <!-- BRAND -->
-    <div class="footer-brand">
-      <img src="./assets/withoutbglogo.png" alt="Velin Logo">
-      <p>
-        Premium everyday wear designed with comfort,
-        quality and timeless style.
-      </p>
-    </div>
-
-    <!-- LINKS -->
-    <div class="footer-links">
-      <h4>Shop</h4>
-      <a href="#">New Arrivals</a>
-      <a href="#">Shirts</a>
-      <a href="#">T-Shirts</a>
-      <a href="#">Jeans</a>
-      <a href="#">Jackets</a>
-    </div>
-
-    <div class="footer-links">
-      <h4>Company</h4>
-      <a href="#">About Us</a>
-      <a href="#">Contact</a>
-      <a href="#">Careers</a>
-      <a href="#">Sustainability</a>
-    </div>
-
-    <div class="footer-links">
-      <h4>Support</h4>
-      <a href="#">FAQs</a>
-      <a href="#">Shipping & Returns</a>
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms & Conditions</a>
-    </div>
-
-  </div>
-
-  <div class="footer-bottom">
-    <p>© 2025 Velin. All rights reserved.</p>
-  </div>
-
-</footer>
-
-<!-- LOGIN MODAL -->
-<div class="login-modal" id="loginModal">
-  <div class="login-card">
-    <button class="login-close" id="closeLogin">✕</button>
-
-    <h3>Welcome Back</h3>
-    <p>Please login to continue</p>
-
-    <form id="loginForm">
-      <input type="email" placeholder="Email address" required />
-      <input type="password" placeholder="Password" required />
-
-      <button type="submit" class="login-submit">
-        Login & Continue
-      </button>
-    </form>
-
-    <span class="login-note">
-      Please login to buy the product.
-    </span>
-  </div>
-</div>
-
-
-
-  <script src="script.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <script>AOS.init({ duration: 700, once: true });</script>
-
-</body>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

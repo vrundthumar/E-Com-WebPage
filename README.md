@@ -1,54 +1,73 @@
-# 🛒 Velin – E-Commerce Web Application
+# Welcome to your Lovable project
 
-**Velin** is a fully responsive, modern e-commerce website built with vanilla **HTML**, **CSS**, and **JavaScript**. It provides a rich shopping experience with product browsing, real-time filtering.
+## Project info
 
-## 🌐 Live Demo
+**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
 
-🔗 [Velin Live](https://velin.vercel.app)
+## How can I edit this code?
 
----
+There are several ways of editing your application.
 
-## 🧩 Features
+**Use Lovable**
 
-### ✅ Product Listing
-- Dynamically rendered products from a JS array of 30+ electronics items.
-- Displays product image, title, brand, specs, price, and action buttons.
+Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
 
+Changes made via Lovable will be committed automatically to this repo.
 
-### 🔍 Filter
-- **Dropdown-based filter** by product category.
+**Use your preferred IDE**
 
+If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
 
-### 🖥 Responsive Design
-- Fully responsive down to **275px width**.
-- Optimized for desktop, tablets, and mobile views.
-- Smooth UI with **dark theme + soft gold highlights**.
+The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
----
+Follow these steps:
 
-## 🛠 Tech Stack
+```sh
+# Step 1: Clone the repository using the project's Git URL.
+git clone <YOUR_GIT_URL>
 
-| Technology | Usage                          |
-|------------|---------------------------------|
-| HTML5      | Page structure and semantics    |
-| CSS3       | Responsive layout, dark theme   |
-| JavaScript | Interactivity and dynamic logic |
+# Step 2: Navigate to the project directory.
+cd <YOUR_PROJECT_NAME>
 
----
+# Step 3: Install the necessary dependencies.
+npm i
 
-## ⚙️ How It Works
+# Step 4: Start the development server with auto-reloading and an instant preview.
+npm run dev
+```
 
-1. Products load dynamically from a JS object.
-2. Users can filter products.
+**Edit a file directly in GitHub**
 
----
+- Navigate to the desired file(s).
+- Click the "Edit" button (pencil icon) at the top right of the file view.
+- Make your changes and commit the changes.
 
-## 🙌 Author
+**Use GitHub Codespaces**
 
-Made with 💻 by [Vrund Thumar](https://github.com/vrundthumar)
+- Navigate to the main page of your repository.
+- Click on the "Code" button (green button) near the top right.
+- Select the "Codespaces" tab.
+- Click on "New codespace" to launch a new Codespace environment.
+- Edit files directly within the Codespace and commit and push your changes once you're done.
 
----
+## What technologies are used for this project?
 
-## 📄 License
+This project is built with:
 
-This project is open-source under the [MIT License](LICENSE).
+- Vite
+- TypeScript
+- React
+- shadcn-ui
+- Tailwind CSS
+
+## How can I deploy this project?
+
+Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+
+## Can I connect a custom domain to my Lovable project?
+
+Yes, you can!
+
+To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+
+Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
